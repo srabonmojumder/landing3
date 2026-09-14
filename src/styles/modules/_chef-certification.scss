@@ -1,0 +1,122 @@
+@use "../abstracts/tokens" as *;
+@use "../abstracts/mixins" as *;
+
+.chef-certification-section {
+  background-color: #f1f7f3;
+  position: relative;
+
+  .cert-container-card {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 2rem 1.5rem;
+    border: 1px solid rgba(11, 70, 41, 0.15);
+    box-shadow: 0 12px 40px rgba(5, 42, 23, 0.07);
+    text-align: center;
+
+    @media (min-width: 768px) {
+      padding: 3rem 2.5rem;
+    }
+  }
+
+  .cert-header {
+    margin-bottom: 2rem;
+
+    .cert-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, #094726 0%, #042e17 100%);
+      color: #ffffff;
+      font-size: clamp(1.2rem, 3.8vw, 1.55rem);
+      font-weight: 700;
+      padding: 0.75rem 2rem;
+      border-radius: 10px;
+      box-shadow: 0 6px 20px rgba(4, 46, 23, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      margin-bottom: 0.85rem;
+    }
+
+    .cert-subtext {
+      font-family: $font-bengali;
+      font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+      color: #064e3b;
+      font-weight: 600;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+  }
+
+  .certificate-display-frame {
+    max-width: 780px;
+    margin: 0 auto 2.5rem auto;
+    border-radius: 18px;
+    padding: 10px;
+    background: linear-gradient(135deg, #27272a 0%, #18181b 100%);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+    border: 2px solid #d4af37;
+
+    .inner-cert-wrap {
+      border-radius: 12px;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+    }
+  }
+
+  .cert-pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    max-width: 820px;
+    margin: 0 auto;
+
+    @media (min-width: 640px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .pillar-card {
+      background: #f6faf6;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: 14px;
+      padding: 1.15rem 0.85rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      transition: transform 0.25s ease, background 0.25s ease;
+
+      &:hover {
+        transform: translateY(-4px);
+        background: #ecfdf5;
+      }
+
+      .pillar-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: #064e3b;
+        color: #fef08a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .pillar-title {
+        font-family: $font-bengali;
+        font-size: 0.98rem;
+        font-weight: 700;
+        color: #062f18;
+      }
+
+      .pillar-desc {
+        font-size: 0.82rem;
+        color: #4b6653;
+        line-height: 1.35;
+      }
+    }
+  }
+}
