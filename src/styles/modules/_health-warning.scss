@@ -1,0 +1,121 @@
+@use "../abstracts/tokens" as *;
+@use "../abstracts/mixins" as *;
+
+.health-warning-section {
+  background-color: #f7faf7;
+  position: relative;
+
+  .warning-content-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 1.5rem;
+    border: 1px solid rgba(220, 38, 38, 0.2);
+    box-shadow: 0 10px 35px rgba(220, 38, 38, 0.06);
+
+    @media (min-width: 768px) {
+      padding: 2.5rem;
+    }
+  }
+
+  .split-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: center;
+
+    @media (min-width: 860px) {
+      grid-template-columns: 1.05fr 1.35fr;
+      gap: 2.8rem;
+    }
+  }
+
+  .visual-side {
+    position: relative;
+
+    .warning-image-frame {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+      border: 2px solid rgba(239, 68, 68, 0.3);
+      position: relative;
+
+      img {
+        width: 100%;
+        height: auto;
+        display: block;
+        transition: transform 0.4s ease;
+      }
+
+      &:hover img {
+        transform: scale(1.03);
+      }
+
+      .alert-overlay-tag {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        background: rgba(185, 28, 28, 0.92);
+        backdrop-filter: blur(6px);
+        color: #ffffff;
+        font-size: 0.82rem;
+        font-weight: 700;
+        padding: 4px 12px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      }
+    }
+  }
+
+  .points-side {
+    .hazard-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+
+      .hazard-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.9rem;
+        padding: 0.85rem 1rem;
+        background: #fff8f8;
+        border-radius: 12px;
+        border-left: 4px solid #ef4444;
+        transition: transform 0.2s ease, background-color 0.2s ease;
+
+        &:hover {
+          transform: translateX(4px);
+          background: #fef2f2;
+        }
+
+        .icon-wrap {
+          flex-shrink: 0;
+          margin-top: 2px;
+          color: #dc2626;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 26px;
+          height: 26px;
+          border-radius: 50%;
+          background: rgba(239, 68, 68, 0.12);
+        }
+
+        .item-text {
+          font-family: $font-bengali;
+          font-size: clamp(0.98rem, 2.2vw, 1.08rem);
+          color: #2b1111;
+          line-height: 1.55;
+          font-weight: 500;
+
+          strong {
+            color: #991b1b;
+            font-weight: 700;
+          }
+        }
+      }
+    }
+  }
+}
