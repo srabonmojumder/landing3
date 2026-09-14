@@ -1,0 +1,83 @@
+// Design Mixins for Date Jam Landing Page
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin glassmorphism($bg: rgba(255, 255, 255, 0.88), $blur: 14px, $border: rgba(255, 255, 255, 0.4)) {
+  background: $bg;
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+  border: 1px solid $border;
+}
+
+@mixin hover-lift {
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  &:hover {
+    transform: translateY(-4px);
+  }
+}
+
+@mixin green-pill-title {
+  background: linear-gradient(135deg, #0f5834 0%, #06371f 100%);
+  color: #ffffff;
+  padding: 10px 24px;
+  border-radius: 8px;
+  display: inline-block;
+  font-weight: 700;
+  font-size: clamp(1.15rem, 3.8vw, 1.45rem);
+  box-shadow: 0 6px 20px rgba(6, 55, 31, 0.35);
+  letter-spacing: 0.3px;
+  text-align: center;
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
+}
+
+// Responsive Breakpoints
+@mixin mobile-xs {
+  @media (max-width: 375px) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: 640px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin tablet-up {
+  @media (min-width: 769px) {
+    @content;
+  }
+}
+
+@mixin desktop-sm {
+  @media (max-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin desktop-up {
+  @media (min-width: 1025px) {
+    @content;
+  }
+}
+
+@mixin touch-target {
+  min-height: 48px;
+  min-width: 48px;
+}
