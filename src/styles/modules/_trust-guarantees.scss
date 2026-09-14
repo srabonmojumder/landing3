@@ -1,0 +1,62 @@
+@use "../abstracts/tokens" as *;
+@use "../abstracts/mixins" as *;
+
+.trust-guarantees-section {
+  background: #ffffff;
+  border-top: 1px solid rgba(11, 70, 41, 0.1);
+  border-bottom: 1px solid rgba(11, 70, 41, 0.1);
+  padding: 2.5rem 0;
+
+  .trust-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    .trust-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.65rem;
+      padding: 1.25rem 0.85rem;
+      background: #fcfdfc;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: 16px;
+      transition: transform 0.25s ease;
+
+      &:hover {
+        transform: translateY(-3px);
+      }
+
+      .trust-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        background: #064e3b;
+        color: #fef08a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(6, 78, 59, 0.25);
+      }
+
+      .trust-title {
+        font-family: $font-bengali;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #071f11;
+      }
+
+      .trust-sub {
+        font-size: 0.85rem;
+        color: #55755e;
+        line-height: 1.35;
+      }
+    }
+  }
+}
