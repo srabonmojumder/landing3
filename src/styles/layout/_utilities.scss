@@ -1,0 +1,94 @@
+@use "../abstracts/tokens" as *;
+@use "../abstracts/mixins" as *;
+
+// Action Pill CTA Buttons
+.btn-red-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  background: $gradient-cta-red;
+  color: #ffffff;
+  font-family: $font-bengali;
+  font-weight: 700;
+  font-size: clamp(1.15rem, 3.5vw, 1.35rem);
+  padding: 0.9rem 2.8rem;
+  min-height: 52px;
+  border-radius: 9999px;
+  box-shadow: $shadow-cta-red;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.02em;
+
+  @media (max-width: 480px) {
+    width: 100%;
+    padding: 0.85rem 1.5rem;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+    transition: left 0.65s ease;
+  }
+
+  &:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 32px rgba(220, 38, 38, 0.55);
+
+    &::before {
+      left: 100%;
+    }
+  }
+
+  &:active {
+    transform: translateY(1px) scale(0.99);
+  }
+}
+
+// Green Pill Section Headers
+.green-pill-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #094726 0%, #032d16 100%);
+  color: #ffffff;
+  font-family: $font-bengali;
+  font-size: clamp(1.15rem, 3.6vw, 1.5rem);
+  font-weight: 700;
+  padding: 0.7rem 1.8rem;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(3, 45, 22, 0.32);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+  max-width: 100%;
+}
+
+.section-title-center {
+  text-align: center;
+  margin-bottom: 2.2rem;
+}
+
+// Glassmorphism Card
+.glass-panel {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(11, 70, 41, 0.12);
+  border-radius: $radius-lg;
+  box-shadow: $shadow-md;
+}
+
+.center-cta-box {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.2rem;
+}

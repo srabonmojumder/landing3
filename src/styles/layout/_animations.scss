@@ -1,0 +1,118 @@
+@use "../abstracts/tokens" as *;
+
+// 1. Scroll Reveal Engine
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: 
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+
+  &.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  &.reveal-fade {
+    transform: none;
+    transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+
+    &.is-revealed {
+      opacity: 1;
+    }
+  }
+
+  &.reveal-scale {
+    transform: scale(0.95);
+    transition: 
+      opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+
+    &.is-revealed {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  &.reveal-left {
+    transform: translateX(-24px);
+
+    &.is-revealed {
+      transform: translateX(0);
+    }
+  }
+
+  &.reveal-right {
+    transform: translateX(24px);
+
+    &.is-revealed {
+      transform: translateX(0);
+    }
+  }
+}
+
+// 2. Micro Stagger Delays
+.delay-50  { transition-delay: 50ms; }
+.delay-100 { transition-delay: 100ms; }
+.delay-150 { transition-delay: 150ms; }
+.delay-200 { transition-delay: 200ms; }
+.delay-250 { transition-delay: 250ms; }
+.delay-300 { transition-delay: 300ms; }
+.delay-350 { transition-delay: 350ms; }
+.delay-400 { transition-delay: 400ms; }
+.delay-500 { transition-delay: 500ms; }
+
+// 3. Ambient & Continuous Keyframes
+@keyframes gentleFloat {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-7px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.6), 0 8px 24px rgba(220, 38, 38, 0.35);
+  }
+  70% {
+    box-shadow: 0 0 0 16px rgba(220, 38, 38, 0), 0 8px 24px rgba(220, 38, 38, 0.35);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0), 0 8px 24px rgba(220, 38, 38, 0.35);
+  }
+}
+
+@keyframes auraGlow {
+  0% { opacity: 0.5; transform: scale(0.98); }
+  50% { opacity: 0.85; transform: scale(1.03); }
+  100% { opacity: 0.5; transform: scale(0.98); }
+}
+
+@keyframes lightShimmer {
+  0% { transform: translateX(-150%) skewX(-20deg); }
+  100% { transform: translateX(250%) skewX(-20deg); }
+}
+
+.animate-gentle-float {
+  animation: gentleFloat 5s ease-in-out infinite;
+}
+
+.btn-pulse {
+  animation: pulseGlow 2.2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-on-scroll,
+  .reveal-on-scroll.reveal-left,
+  .reveal-on-scroll.reveal-right,
+  .reveal-on-scroll.reveal-scale {
+    transform: none !important;
+    transition: opacity 0.2s linear !important;
+    opacity: 1 !important;
+  }
+
+  .animate-gentle-float,
+  .btn-pulse {
+    animation: none !important;
+  }
+}

@@ -1,0 +1,39 @@
+.landing-page-root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+  position: relative;
+  background-color: #f6faf6;
+}
+
+.container {
+  width: 100%;
+  max-width: 1080px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+
+  @media (min-width: 768px) {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+.container-sm {
+  width: 100%;
+  max-width: 880px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+.section-wrapper {
+  padding: 3rem 0;
+  position: relative;
+
+  @media (min-width: 768px) {
+    padding: 4.75rem 0;
+  }
+}
