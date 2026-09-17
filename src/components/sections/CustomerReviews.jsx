@@ -10,7 +10,8 @@ import {
   MessageSquareHeart,
   ChevronLeft,
   ChevronRight,
-  MoveHorizontal
+  MoveHorizontal,
+  Camera
 } from 'lucide-react';
 
 export default function CustomerReviews() {
@@ -32,6 +33,8 @@ export default function CustomerReviews() {
       rating: 5,
       date: '২ দিন আগে',
       pack: '২টি জার (ফ্যামিলি প্যাক)',
+      photo: '/images/review-kid-eating.jpg',
+      photoCaption: 'সকালে পাউরুটি দিয়ে খাওয়ার ছবি',
       text: 'আমার ৬ বছরের ছেলে সকালে পাউরুটি বা ডিম কিছুই খেতে চাইতো না। এই ডেট জ্যাম পাউরুটিতে দেওয়ার পর থেকে সে প্লেট চেটেপুটে শেষ করে! সবচেয়ে বড় শান্তি হলো এতে কোনো সাদা চিনি নেই।',
       likes: 18,
     },
@@ -44,6 +47,8 @@ export default function CustomerReviews() {
       rating: 5,
       date: '৪ দিন আগে',
       pack: '৩টি জার (মেগা সেভার প্যাক)',
+      photo: '/images/review-breakfast-table.jpg',
+      photoCaption: 'সকালের ডাইনিং টেবিলের ছবি',
       text: 'বাজারে চিনি ও রঙের যে ছড়াছড়ি, বাচ্চাদের জন্য ভালো কিছু পাওয়াই মুশকিল ছিল। স্বাদ ঘরের ডেট জ্যামটা সত্যি অরিজিনাল খেঁজুরের স্বাদ দেয়। ফ্যামিলি প্যাক নিয়েছিলাম, সবাই খুব পছন্দ করেছে।',
       likes: 14,
     },
@@ -56,6 +61,8 @@ export default function CustomerReviews() {
       rating: 5,
       date: '১ সপ্তাহ আগে',
       pack: '২টি জার (ফ্যামিলি প্যাক)',
+      photo: '/images/review-unboxing-package.jpg',
+      photoCaption: 'নিরাপদ বাবল র‍্যাপ আনবক্সিং',
       text: 'প্যাকেজিং খুবই প্রফেশনাল ও মজবুত ছিল। মাত্র দুই দিনে ডেলিভারি পেয়েছি। প্রোডাক্টের থিকনেস ও স্বাদ দুটোই প্রিমিয়াম মানের। প্রতিটি সচেতন পরিবারের ঘরে এটি থাকা উচিত।',
       likes: 21,
     },
@@ -68,6 +75,8 @@ export default function CustomerReviews() {
       rating: 5,
       date: '১ সপ্তাহ আগে',
       pack: '১টি জার (সিঙ্গেল প্যাক)',
+      photo: '/images/review-spoon-texture.jpg',
+      photoCaption: 'চামচে জ্যামের ঘন টেক্সচার',
       text: 'বাচ্চাকে স্কুলে টিফিনে দেওয়ার জন্য একদম পারফেক্ট। কোনো প্রিজারভেটিভ নেই জেনে নিশ্চিন্তে খাওয়াই। বাচ্চা আগের চেয়ে অনেক বেশি এনার্জিটিক থাকে। অনেক শুভকামনা!',
       likes: 9,
     },
@@ -80,6 +89,8 @@ export default function CustomerReviews() {
       rating: 5,
       date: '১০ দিন আগে',
       pack: '২টি জার (ফ্যামিলি প্যাক)',
+      photo: '/images/review-breakfast-table.jpg',
+      photoCaption: 'নাস্তার টোস্ট ও জ্যাম',
       text: 'আমি নিজে ডায়াবেটিসের বর্ডারলাইনে আছি, মিষ্টি খাওয়া বারণ। কিন্তু এই প্রাকৃতিক খেঁজুরের জ্যাম চা-চামচ দিয়ে টোস্টের সাথে খেলে কোনো সমস্যা হয় না। খাঁটি ও রুচিকর খাবার।',
       likes: 27,
     },
@@ -92,6 +103,8 @@ export default function CustomerReviews() {
       rating: 5,
       date: '২ সপ্তাহ আগে',
       pack: '৩টি জার (মেগা সেভার প্যাক)',
+      photo: '/images/review-unboxing-package.jpg',
+      photoCaption: 'অর্ডার করা ৩ জারের প্যাকেজ',
       text: 'ক্যাশ অন ডেলিভারিতে চেক করে নিয়েছিলাম। যেমন দেখেছি তেমনটাই পেয়েছি। ৩ জারের মেগা সেভার প্যাকে ফ্রি ডেলিভারি পেয়েছি। অসাধারণ সার্ভিস!',
       likes: 16,
     },
@@ -104,6 +117,8 @@ export default function CustomerReviews() {
       rating: 5,
       date: '২ সপ্তাহ আগে',
       pack: '২টি জার (ফ্যামিলি প্যাক)',
+      photo: '/images/review-spoon-texture.jpg',
+      photoCaption: 'প্রাকৃতিক মধুর মতো ঘনত্ব',
       text: 'খেজুর ও খাঁটি মধুর এত সুন্দর মিশ্রণ বাজারে আগে কখনো দেখিনি। সকালের নাস্তায় ডিম-পরোটা বা টোস্টের সাথে অসাধারণ জমে। পরিবারের সবাই তৃপ্তি নিয়ে খাচ্ছে।',
       likes: 19,
     },
@@ -116,6 +131,8 @@ export default function CustomerReviews() {
       rating: 5,
       date: '৩ সপ্তাহ আগে',
       pack: '১টি জার (সিঙ্গেল প্যাক)',
+      photo: '/images/review-kid-eating.jpg',
+      photoCaption: 'বাচ্চাদের পছন্দের স্বাস্থ্যকর খাবার',
       text: 'প্রথমবার পরীক্ষামূলক ১টি জার নিয়েছিলাম। এখন পুরো পরিবার এটার ফ্যান হয়ে গেছে। এবার ৩ জারের ফ্যামিলি প্যাক অর্ডার করলাম। কোয়ালিটিতে কোনো ছাড় নেই!',
       likes: 23,
     },
@@ -130,7 +147,7 @@ export default function CustomerReviews() {
 
     const card = trackRef.current.querySelector('.modern-review-card');
     if (card) {
-      const cardWidth = card.offsetWidth + 24; // width + gap
+      const cardWidth = card.offsetWidth + 24;
       const newIndex = Math.round(scrollLeft / cardWidth);
       setActiveIndex(Math.min(newIndex, reviews.length - 1));
     }
@@ -162,7 +179,7 @@ export default function CustomerReviews() {
     if (!isDragging || !trackRef.current) return;
     e.preventDefault();
     const x = e.pageX - trackRef.current.offsetLeft;
-    const walk = (x - startX) * 1.6; // Scroll speed multiplier
+    const walk = (x - startX) * 1.6;
     trackRef.current.scrollLeft = scrollLeftState - walk;
   };
 
@@ -268,7 +285,7 @@ export default function CustomerReviews() {
         <div className="slider-controls-bar reveal-on-scroll">
           <div className="drag-hint-pill">
             <MoveHorizontal size={15} />
-            <span>ড্র্যাগ বা সোয়াইপ করে স্লাইড করুন</span>
+            <span>ড্র্যাগ বা সোয়াইপ করে ছবি ও রিভিউ দেখুন</span>
           </div>
 
           <div className="slider-nav-arrows">
@@ -305,6 +322,21 @@ export default function CustomerReviews() {
           >
             {reviews.map((rev) => (
               <div key={rev.id} className="modern-review-card slider-card">
+                {/* Review Photo Showcase */}
+                {rev.photo && (
+                  <div className="review-photo-showcase">
+                    <img
+                      src={rev.photo}
+                      alt={rev.photoCaption || 'গ্রাহকের রিভিউ ছবি'}
+                      className="review-photo-img"
+                    />
+                    <div className="photo-badge-overlay">
+                      <Camera size={12} />
+                      <span>{rev.photoCaption}</span>
+                    </div>
+                  </div>
+                )}
+
                 <div className="review-card-top">
                   <div className={`avatar-box ${rev.avatarGrad}`}>{rev.avatarLetter}</div>
                   <div className="author-details">
@@ -314,7 +346,7 @@ export default function CustomerReviews() {
                       <span>{rev.location}</span>
                     </div>
                   </div>
-                  <Quote size={24} className="quote-watermark" />
+                  <Quote size={22} className="quote-watermark" />
                 </div>
 
                 <div className="rating-and-pack">
