@@ -4,14 +4,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import {
   Star,
   CheckCircle2,
-  MapPin,
-  ThumbsUp,
-  Quote,
   MessageSquareHeart,
   ChevronLeft,
   ChevronRight,
   MoveHorizontal,
-  Camera
+  Maximize2,
+  X
 } from 'lucide-react';
 
 export default function CustomerReviews() {
@@ -22,134 +20,71 @@ export default function CustomerReviews() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [activeLightboxImage, setActiveLightboxImage] = useState(null);
 
-  const reviews = [
+  const reviewImages = [
     {
       id: 1,
-      name: 'ফারহানা আক্তার',
-      location: 'উত্তরা, ঢাকা',
-      avatarLetter: 'ফা',
-      avatarGrad: 'from-emerald',
-      rating: 5,
-      date: '২ দিন আগে',
-      pack: '২টি জার (ফ্যামিলি প্যাক)',
-      photo: '/images/review-kid-eating.jpg',
-      photoCaption: 'সকালে পাউরুটি দিয়ে খাওয়ার ছবি',
-      text: 'আমার ৬ বছরের ছেলে সকালে পাউরুটি বা ডিম কিছুই খেতে চাইতো না। এই ডেট জ্যাম পাউরুটিতে দেওয়ার পর থেকে সে প্লেট চেটেপুটে শেষ করে! সবচেয়ে বড় শান্তি হলো এতে কোনো সাদা চিনি নেই।',
-      likes: 18,
+      image: '/images/review-whatsapp-chat.jpg',
+      caption: 'গ্রাহকের হোয়াটসঅ্যাপ চ্যাট রিভিউ',
+      tag: 'ভেরিফাইড চ্যাট প্রুফ',
     },
     {
       id: 2,
-      name: 'তানজিলা সুলতানা',
-      location: 'জিইসি, চট্টগ্রাম',
-      avatarLetter: 'তা',
-      avatarGrad: 'from-amber',
-      rating: 5,
-      date: '৪ দিন আগে',
-      pack: '৩টি জার (মেগা সেভার প্যাক)',
-      photo: '/images/review-breakfast-table.jpg',
-      photoCaption: 'সকালের ডাইনিং টেবিলের ছবি',
-      text: 'বাজারে চিনি ও রঙের যে ছড়াছড়ি, বাচ্চাদের জন্য ভালো কিছু পাওয়াই মুশকিল ছিল। স্বাদ ঘরের ডেট জ্যামটা সত্যি অরিজিনাল খেঁজুরের স্বাদ দেয়। ফ্যামিলি প্যাক নিয়েছিলাম, সবাই খুব পছন্দ করেছে।',
-      likes: 14,
+      image: '/images/review-kid-eating.jpg',
+      caption: 'বাচ্চাদের পছন্দের পুষ্টিকর নাস্তা',
+      tag: 'বাস্তব কাস্টমার ফটো',
     },
     {
       id: 3,
-      name: 'মো: নাজমুল হাসান',
-      location: 'বোয়ালিয়া, রাজশাহী',
-      avatarLetter: 'না',
-      avatarGrad: 'from-blue',
-      rating: 5,
-      date: '১ সপ্তাহ আগে',
-      pack: '২টি জার (ফ্যামিলি প্যাক)',
-      photo: '/images/review-unboxing-package.jpg',
-      photoCaption: 'নিরাপদ বাবল র‍্যাপ আনবক্সিং',
-      text: 'প্যাকেজিং খুবই প্রফেশনাল ও মজবুত ছিল। মাত্র দুই দিনে ডেলিভারি পেয়েছি। প্রোডাক্টের থিকনেস ও স্বাদ দুটোই প্রিমিয়াম মানের। প্রতিটি সচেতন পরিবারের ঘরে এটি থাকা উচিত।',
-      likes: 21,
+      image: '/images/review-customer-holding-jar.jpg',
+      caption: 'খুশি গ্রাহকের হাতের খাঁটি ডেট জ্যাম',
+      tag: 'গ্রাহকের সরাসরি ছবি',
     },
     {
       id: 4,
-      name: 'সাবরিনা ইয়াসমিন',
-      location: 'উপশহর, সিলেট',
-      avatarLetter: 'সা',
-      avatarGrad: 'from-rose',
-      rating: 5,
-      date: '১ সপ্তাহ আগে',
-      pack: '১টি জার (সিঙ্গেল প্যাক)',
-      photo: '/images/review-spoon-texture.jpg',
-      photoCaption: 'চামচে জ্যামের ঘন টেক্সচার',
-      text: 'বাচ্চাকে স্কুলে টিফিনে দেওয়ার জন্য একদম পারফেক্ট। কোনো প্রিজারভেটিভ নেই জেনে নিশ্চিন্তে খাওয়াই। বাচ্চা আগের চেয়ে অনেক বেশি এনার্জিটিক থাকে। অনেক শুভকামনা!',
-      likes: 9,
+      image: '/images/review-breakfast-table.jpg',
+      caption: 'ডাইনিং টেবিলে সকালের নাস্তা',
+      tag: 'ফ্যামিলি ব্রেকফাস্ট',
     },
     {
       id: 5,
-      name: 'আরিফুল ইসলাম',
-      location: 'ধানমন্ডি, ঢাকা',
-      avatarLetter: 'আ',
-      avatarGrad: 'from-emerald',
-      rating: 5,
-      date: '১০ দিন আগে',
-      pack: '২টি জার (ফ্যামিলি প্যাক)',
-      photo: '/images/review-breakfast-table.jpg',
-      photoCaption: 'নাস্তার টোস্ট ও জ্যাম',
-      text: 'আমি নিজে ডায়াবেটিসের বর্ডারলাইনে আছি, মিষ্টি খাওয়া বারণ। কিন্তু এই প্রাকৃতিক খেঁজুরের জ্যাম চা-চামচ দিয়ে টোস্টের সাথে খেলে কোনো সমস্যা হয় না। খাঁটি ও রুচিকর খাবার।',
-      likes: 27,
+      image: '/images/review-mom-spreading-toast.jpg',
+      caption: 'টোস্টে মাখানো ডেট জ্যাম',
+      tag: '১০০% প্রাকৃতিক টেক্সচার',
     },
     {
       id: 6,
-      name: 'নুসরাত জাহান',
-      location: 'সোনাডাঙ্গা, খুলনা',
-      avatarLetter: 'নু',
-      avatarGrad: 'from-amber',
-      rating: 5,
-      date: '২ সপ্তাহ আগে',
-      pack: '৩টি জার (মেগা সেভার প্যাক)',
-      photo: '/images/review-unboxing-package.jpg',
-      photoCaption: 'অর্ডার করা ৩ জারের প্যাকেজ',
-      text: 'ক্যাশ অন ডেলিভারিতে চেক করে নিয়েছিলাম। যেমন দেখেছি তেমনটাই পেয়েছি। ৩ জারের মেগা সেভার প্যাকে ফ্রি ডেলিভারি পেয়েছি। অসাধারণ সার্ভিস!',
-      likes: 16,
+      image: '/images/review-unboxing-package.jpg',
+      caption: 'নিরাপদ বাবল র‍্যাপ পার্সেল আনবক্সিং',
+      tag: 'ডেলিভারি আনবক্সিং',
     },
     {
       id: 7,
-      name: 'মাহমুদুল হক',
-      location: 'চকবাজার, কুমিল্লা',
-      avatarLetter: 'মা',
-      avatarGrad: 'from-blue',
-      rating: 5,
-      date: '২ সপ্তাহ আগে',
-      pack: '২টি জার (ফ্যামিলি প্যাক)',
-      photo: '/images/review-spoon-texture.jpg',
-      photoCaption: 'প্রাকৃতিক মধুর মতো ঘনত্ব',
-      text: 'খেজুর ও খাঁটি মধুর এত সুন্দর মিশ্রণ বাজারে আগে কখনো দেখিনি। সকালের নাস্তায় ডিম-পরোটা বা টোস্টের সাথে অসাধারণ জমে। পরিবারের সবাই তৃপ্তি নিয়ে খাচ্ছে।',
-      likes: 19,
+      image: '/images/review-spoon-texture.jpg',
+      caption: 'চামচে প্রাকৃতিক ঘনত্বের প্রমাণ',
+      tag: 'ল্যাব ও হোম টেস্ট',
     },
     {
       id: 8,
-      name: 'রোকেয়া বেগম',
-      location: 'জালেশ্বরীতলা, বগুড়া',
-      avatarLetter: 'রো',
-      avatarGrad: 'from-rose',
-      rating: 5,
-      date: '৩ সপ্তাহ আগে',
-      pack: '১টি জার (সিঙ্গেল প্যাক)',
-      photo: '/images/review-kid-eating.jpg',
-      photoCaption: 'বাচ্চাদের পছন্দের স্বাস্থ্যকর খাবার',
-      text: 'প্রথমবার পরীক্ষামূলক ১টি জার নিয়েছিলাম। এখন পুরো পরিবার এটার ফ্যান হয়ে গেছে। এবার ৩ জারের ফ্যামিলি প্যাক অর্ডার করলাম। কোয়ালিটিতে কোনো ছাড় নেই!',
-      likes: 23,
+      image: '/images/review-family-breakfast.jpg',
+      caption: 'পুরো পরিবারের স্বাস্থ্যকর সকাল',
+      tag: 'সন্তুষ্ট পরিবার',
     },
   ];
 
-  // Update active index and scroll boundaries
+  // Update scroll bounds and active index
   const updateScrollState = () => {
     if (!trackRef.current) return;
     const { scrollLeft, scrollWidth, clientWidth } = trackRef.current;
     setCanScrollLeft(scrollLeft > 10);
     setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
 
-    const card = trackRef.current.querySelector('.modern-review-card');
+    const card = trackRef.current.querySelector('.review-photo-card');
     if (card) {
-      const cardWidth = card.offsetWidth + 24;
+      const cardWidth = card.offsetWidth + 20;
       const newIndex = Math.round(scrollLeft / cardWidth);
-      setActiveIndex(Math.min(newIndex, reviews.length - 1));
+      setActiveIndex(Math.min(newIndex, reviewImages.length - 1));
     }
   };
 
@@ -167,7 +102,7 @@ export default function CustomerReviews() {
     };
   }, []);
 
-  // Mouse Drag Events
+  // Mouse Drag Logic
   const handleMouseDown = (e) => {
     if (!trackRef.current) return;
     setIsDragging(true);
@@ -191,11 +126,11 @@ export default function CustomerReviews() {
     if (isDragging) setIsDragging(false);
   };
 
-  // Button Click Navigation
+  // Arrow Navigation
   const scroll = (direction) => {
     if (!trackRef.current) return;
-    const card = trackRef.current.querySelector('.modern-review-card');
-    const cardWidth = card ? card.offsetWidth + 24 : 360;
+    const card = trackRef.current.querySelector('.review-photo-card');
+    const cardWidth = card ? card.offsetWidth + 20 : 340;
     const scrollOffset = direction === 'next' ? cardWidth : -cardWidth;
 
     trackRef.current.scrollBy({
@@ -206,8 +141,8 @@ export default function CustomerReviews() {
 
   const scrollToSlide = (index) => {
     if (!trackRef.current) return;
-    const card = trackRef.current.querySelector('.modern-review-card');
-    const cardWidth = card ? card.offsetWidth + 24 : 360;
+    const card = trackRef.current.querySelector('.review-photo-card');
+    const cardWidth = card ? card.offsetWidth + 20 : 340;
 
     trackRef.current.scrollTo({
       left: index * cardWidth,
@@ -226,10 +161,10 @@ export default function CustomerReviews() {
           </div>
 
           <h2 className="section-headline">
-            সম্মানিত অভিভাবক ও পরিবারের <span className="highlight-gold">আন্তরিক মতামত</span>
+            সম্মানিত ক্রেতাদের পাঠানো <span className="highlight-gold">বাস্তব ছবির রিভিউ</span>
           </h2>
           <p className="section-subtext">
-            স্বাদ ঘর প্রিমিয়াম ডেট জ্যাম ব্যবহার করে নিয়মিত উপকৃত হচ্ছেন দেশের ৩,৫০০+ স্বাস্থ্য সচেতন পরিবার।
+            স্বাদ ঘর প্রিমিয়াম ডেট জ্যাম হাতে পেয়ে গ্রাহকদের সরাসরি পাঠানো ছবি ও সামাজিক প্রমাণ।
           </p>
         </div>
 
@@ -276,7 +211,7 @@ export default function CustomerReviews() {
             </div>
             <div className="stat-pill">
               <MessageSquareHeart size={16} color="#e11d48" />
-              <span>১০০% জেনুইন কাস্টমার রিভিউ</span>
+              <span>১০০% জেনুইন কাস্টমার ছবি ও প্রুফ</span>
             </div>
           </div>
         </div>
@@ -285,7 +220,7 @@ export default function CustomerReviews() {
         <div className="slider-controls-bar reveal-on-scroll">
           <div className="drag-hint-pill">
             <MoveHorizontal size={15} />
-            <span>ড্র্যাগ বা সোয়াইপ করে ছবি ও রিভিউ দেখুন</span>
+            <span>ছবিগুলো ডানে-বামে ড্র্যাগ বা সোয়াইপ করুন</span>
           </div>
 
           <div className="slider-nav-arrows">
@@ -294,7 +229,7 @@ export default function CustomerReviews() {
               className={`nav-arrow-btn prev ${!canScrollLeft ? 'disabled' : ''}`}
               onClick={() => scroll('prev')}
               disabled={!canScrollLeft}
-              aria-label="Previous review"
+              aria-label="Previous photo"
             >
               <ChevronLeft size={20} />
             </button>
@@ -303,14 +238,14 @@ export default function CustomerReviews() {
               className={`nav-arrow-btn next ${!canScrollRight ? 'disabled' : ''}`}
               onClick={() => scroll('next')}
               disabled={!canScrollRight}
-              aria-label="Next review"
+              aria-label="Next photo"
             >
               <ChevronRight size={20} />
             </button>
           </div>
         </div>
 
-        {/* Draggable Reviews Slider Track */}
+        {/* Draggable Image-Only Reviews Slider Track */}
         <div className="reviews-slider-wrapper">
           <div
             ref={trackRef}
@@ -320,56 +255,36 @@ export default function CustomerReviews() {
             onMouseUp={handleMouseUp}
             onMouseLeave={handleMouseLeave}
           >
-            {reviews.map((rev) => (
-              <div key={rev.id} className="modern-review-card slider-card">
-                {/* Review Photo Showcase */}
-                {rev.photo && (
-                  <div className="review-photo-showcase">
-                    <img
-                      src={rev.photo}
-                      alt={rev.photoCaption || 'গ্রাহকের রিভিউ ছবি'}
-                      className="review-photo-img"
-                    />
-                    <div className="photo-badge-overlay">
-                      <Camera size={12} />
-                      <span>{rev.photoCaption}</span>
+            {reviewImages.map((item) => (
+              <div
+                key={item.id}
+                className="review-photo-card"
+                onClick={() => !isDragging && setActiveLightboxImage(item)}
+              >
+                <div className="photo-media-wrapper">
+                  <img
+                    src={item.image}
+                    alt={item.caption}
+                    className="review-photo-full"
+                    loading="lazy"
+                  />
+
+                  {/* Gradient Overlay with Rating Stars and Caption */}
+                  <div className="photo-overlay-gradient">
+                    <div className="overlay-top-row">
+                      <span className="photo-tag-pill">{item.tag}</span>
+                      <div className="zoom-icon-circle">
+                        <Maximize2 size={14} />
+                      </div>
                     </div>
-                  </div>
-                )}
 
-                <div className="review-card-top">
-                  <div className={`avatar-box ${rev.avatarGrad}`}>{rev.avatarLetter}</div>
-                  <div className="author-details">
-                    <div className="author-name">{rev.name}</div>
-                    <div className="author-location">
-                      <MapPin size={12} />
-                      <span>{rev.location}</span>
-                    </div>
-                  </div>
-                  <Quote size={22} className="quote-watermark" />
-                </div>
-
-                <div className="rating-and-pack">
-                  <div className="star-row">
-                    {[...Array(rev.rating)].map((_, i) => (
-                      <Star key={i} size={14} fill="#f59e0b" stroke="#f59e0b" />
-                    ))}
-                  </div>
-                  <span className="pack-bought-badge">{rev.pack}</span>
-                </div>
-
-                <p className="review-quote-text">“{rev.text}”</p>
-
-                <div className="review-card-footer">
-                  <div className="verified-buyer-tag">
-                    <CheckCircle2 size={13} />
-                    <span>ভেরিফাইড ক্রেতা</span>
-                  </div>
-                  <div className="footer-right">
-                    <span className="review-date">{rev.date}</span>
-                    <div className="helpful-tag">
-                      <ThumbsUp size={12} />
-                      <span>{rev.likes}</span>
+                    <div className="overlay-bottom-row">
+                      <div className="stars-mini-row">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} size={13} fill="#fbbf24" stroke="#fbbf24" />
+                        ))}
+                      </div>
+                      <div className="photo-caption-text">{item.caption}</div>
                     </div>
                   </div>
                 </div>
@@ -380,17 +295,56 @@ export default function CustomerReviews() {
 
         {/* Pagination Dots Indicator */}
         <div className="slider-dots-row reveal-on-scroll">
-          {reviews.map((rev, idx) => (
+          {reviewImages.map((item, idx) => (
             <button
-              key={rev.id}
+              key={item.id}
               type="button"
               className={`dot-pill ${activeIndex === idx ? 'active' : ''}`}
               onClick={() => scrollToSlide(idx)}
-              aria-label={`Go to slide ${idx + 1}`}
+              aria-label={`Go to photo ${idx + 1}`}
             />
           ))}
         </div>
       </div>
+
+      {/* Lightbox Modal for Full View */}
+      {activeLightboxImage && (
+        <div
+          className="review-lightbox-modal"
+          onClick={() => setActiveLightboxImage(null)}
+        >
+          <div
+            className="lightbox-content"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              className="lightbox-close-btn"
+              onClick={() => setActiveLightboxImage(null)}
+              aria-label="Close"
+            >
+              <X size={22} />
+            </button>
+            <img
+              src={activeLightboxImage.image}
+              alt={activeLightboxImage.caption}
+              className="lightbox-img"
+            />
+            <div className="lightbox-footer-info">
+              <div className="lightbox-stars">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={15} fill="#fbbf24" stroke="#fbbf24" />
+                ))}
+              </div>
+              <div className="lightbox-caption">{activeLightboxImage.caption}</div>
+              <div className="lightbox-badge">
+                <CheckCircle2 size={13} />
+                <span>ভেরিফাইড ক্রেতার রিভিউ ছবি</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
