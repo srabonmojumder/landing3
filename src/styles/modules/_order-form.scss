@@ -2,38 +2,88 @@
 @use "../abstracts/mixins" as *;
 
 .order-form-section {
-  background-color: #f1f8f3;
+  background-color: $bg-warm-sand;
   position: relative;
 
   .checkout-container-box {
     background: #ffffff;
-    border-radius: 24px;
-    border: 3px solid #064e3b;
-    box-shadow: 0 16px 45px rgba(6, 78, 59, 0.12);
+    border-radius: 28px;
+    border: 1px solid rgba(8, 44, 27, 0.12);
+    box-shadow: 0 20px 60px -15px rgba(8, 44, 27, 0.12);
     padding: 1.5rem;
     position: relative;
     overflow: hidden;
 
     @media (min-width: 768px) {
-      padding: 2.8rem;
+      padding: 3rem 2.75rem;
     }
   }
 
   .form-main-header {
     text-align: center;
-    margin-bottom: 2.2rem;
+    margin-bottom: 2rem;
+
+    .modern-eyebrow-badge {
+      margin-bottom: 0.85rem;
+    }
 
     .form-headline {
       font-size: clamp(1.45rem, 4.2vw, 2.2rem);
       font-weight: 800;
-      color: #064e3b;
-      margin-bottom: 0.5rem;
+      color: $text-dark;
+      margin-bottom: 0.45rem;
     }
 
     .form-subtext {
-      color: #3b5a45;
-      font-size: 1rem;
+      color: $text-muted;
+      font-size: 0.98rem;
       font-weight: 500;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+  }
+
+  // Urgency Banner
+  .checkout-urgency-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%);
+    border: 1px solid #fecdd3;
+    padding: 0.75rem 1.25rem;
+    border-radius: 14px;
+    margin-bottom: 2.25rem;
+    font-size: 0.9rem;
+    color: #9f1239;
+
+    .urgency-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+
+      .flame-icon {
+        color: #e11d48;
+        animation: pulseDot 1.5s infinite;
+      }
+    }
+
+    .urgency-timer {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #ffffff;
+      padding: 3px 10px;
+      border-radius: $radius-full;
+      font-weight: 700;
+      font-size: 0.78rem;
+      border: 1px solid #fecdd3;
+    }
+
+    @media (max-width: 640px) {
+      flex-direction: column;
+      gap: 0.5rem;
+      text-align: center;
     }
   }
 
@@ -42,53 +92,53 @@
     margin-bottom: 2.5rem;
 
     .packages-title {
-      font-family: $font-bengali;
-      font-size: 1.15rem;
+      font-size: 1.12rem;
       font-weight: 700;
-      color: #072314;
-      margin-bottom: 1rem;
+      color: $text-dark;
+      margin-bottom: 1.15rem;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.6rem;
     }
 
     .packages-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 1rem;
+      gap: 1.15rem;
 
-      @media (min-width: 640px) {
+      @media (min-width: 680px) {
         grid-template-columns: repeat(3, 1fr);
       }
 
       .package-card {
-        border: 2px solid rgba(11, 70, 41, 0.2);
-        border-radius: 16px;
-        padding: 1.25rem 1rem;
-        background: #fafdfa;
+        border: 2px solid rgba(8, 44, 27, 0.12);
+        border-radius: 20px;
+        padding: 1.4rem 1.1rem;
+        background: #fafcfb;
         cursor: pointer;
         position: relative;
-        transition: all 0.28s ease;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
 
         &:hover {
-          border-color: #10b981;
+          border-color: rgba(16, 185, 129, 0.45);
           transform: translateY(-3px);
-          box-shadow: 0 8px 24px rgba(6, 78, 59, 0.1);
+          box-shadow: 0 10px 25px rgba(8, 44, 27, 0.08);
+          background: #ffffff;
         }
 
         &.selected {
-          border-color: #064e3b;
+          border-color: #059669;
           background: #f0fdf4;
-          box-shadow: 0 8px 25px rgba(6, 78, 59, 0.16);
+          box-shadow: 0 12px 30px rgba(5, 150, 105, 0.16);
 
-          .package-radio-mark {
-            border-color: #064e3b;
-            background: #064e3b;
-
-            &::after {
-              opacity: 1;
-            }
+          .package-card-header .radio-selector-circle {
+            background: #059669;
+            border-color: #059669;
+            color: #ffffff;
           }
         }
 
@@ -97,58 +147,75 @@
           top: -12px;
           left: 50%;
           transform: translateX(-50%);
-          background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-          color: #ffffff;
-          font-size: 0.75rem;
+          background: $gradient-gold;
+          color: #071f11;
+          font-size: 0.74rem;
           font-weight: 800;
           padding: 3px 12px;
-          border-radius: 9999px;
+          border-radius: $radius-full;
           box-shadow: 0 4px 10px rgba(217, 119, 6, 0.35);
           white-space: nowrap;
           letter-spacing: 0.5px;
         }
 
-        .package-name {
-          font-family: $font-bengali;
-          font-size: 1.12rem;
-          font-weight: 700;
-          color: #071f11;
-          margin-top: 0.25rem;
-          margin-bottom: 0.4rem;
+        .package-card-header {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.55rem;
+          margin-bottom: 0.35rem;
+
+          .radio-selector-circle {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid rgba(8, 44, 27, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+          }
+
+          .package-name {
+            font-size: 1.08rem;
+            font-weight: 700;
+            color: $text-dark;
+          }
         }
 
         .package-weight {
-          font-size: 0.85rem;
-          color: #4b6653;
-          margin-bottom: 0.75rem;
+          font-size: 0.84rem;
+          color: $text-muted;
+          margin-bottom: 0.85rem;
         }
 
         .price-box {
-          margin-bottom: 0.5rem;
+          margin-bottom: 0.65rem;
 
           .offer-price {
-            font-size: 1.45rem;
+            font-size: 1.55rem;
             font-weight: 800;
-            color: #dc2626;
+            color: #e11d48;
             font-family: $font-display;
           }
 
           .regular-price {
             font-size: 0.95rem;
-            color: #88998d;
+            color: #94a3b8;
             text-decoration: line-through;
-            margin-left: 0.4rem;
+            margin-left: 0.45rem;
           }
         }
 
         .save-badge {
           display: inline-block;
           background: rgba(16, 185, 129, 0.15);
-          color: #065f46;
+          color: #047857;
           font-size: 0.8rem;
           font-weight: 700;
-          padding: 2px 8px;
-          border-radius: 6px;
+          padding: 3px 10px;
+          border-radius: $radius-full;
+          border: 1px solid rgba(16, 185, 129, 0.25);
         }
       }
     }
@@ -160,7 +227,7 @@
     grid-template-columns: 1fr;
     gap: 2rem;
 
-    @media (min-width: 860px) {
+    @media (min-width: 880px) {
       grid-template-columns: 1.35fr 1fr;
       gap: 2.5rem;
     }
@@ -172,51 +239,99 @@
 
       label {
         display: block;
-        font-family: $font-bengali;
-        font-size: 0.98rem;
-        font-weight: 600;
-        color: #072314;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: $text-dark;
         margin-bottom: 0.45rem;
 
         .required-star {
-          color: #dc2626;
+          color: #e11d48;
           margin-left: 3px;
         }
       }
 
-      input[type='text'],
-      input[type='tel'],
-      textarea {
-        width: 100%;
-        padding: 0.85rem 1rem;
-        border-radius: 10px;
-        border: 1.5px solid rgba(11, 70, 41, 0.25);
-        font-family: $font-bengali;
-        font-size: 1rem;
-        color: #071f11;
-        background: #fcfefc;
-        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      .input-with-icon {
+        position: relative;
+        display: flex;
+        align-items: center;
 
-        &:focus {
-          outline: none;
-          border-color: #064e3b;
-          background: #ffffff;
-          box-shadow: 0 0 0 3px rgba(6, 78, 59, 0.15);
+        .field-icon {
+          position: absolute;
+          left: 14px;
+          color: #64748b;
+          pointer-events: none;
+          transition: color 0.2s ease;
         }
 
-        &.has-error {
-          border-color: #dc2626;
-          box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
+        input[type='text'],
+        input[type='tel'] {
+          width: 100%;
+          padding: 0.85rem 1rem 0.85rem 2.75rem;
+          border-radius: 12px;
+          border: 1.5px solid rgba(8, 44, 27, 0.18);
+          font-family: $font-bengali;
+          font-size: 1rem;
+          color: $text-dark;
+          background: #fdfdfd;
+          transition: all 0.25s ease;
+
+          &:focus {
+            outline: none;
+            border-color: #059669;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+
+            & + .field-icon,
+            & ~ .field-icon {
+              color: #059669;
+            }
+          }
+
+          &.has-error {
+            border-color: #e11d48;
+            box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.15);
+          }
+        }
+
+        &.textarea-icon-wrap {
+          align-items: flex-start;
+
+          .textarea-icon {
+            top: 14px;
+          }
+
+          textarea {
+            width: 100%;
+            padding: 0.85rem 1rem 0.85rem 2.75rem;
+            border-radius: 12px;
+            border: 1.5px solid rgba(8, 44, 27, 0.18);
+            font-family: $font-bengali;
+            font-size: 1rem;
+            color: $text-dark;
+            background: #fdfdfd;
+            resize: vertical;
+            transition: all 0.25s ease;
+
+            &:focus {
+              outline: none;
+              border-color: #059669;
+              background: #ffffff;
+              box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+            }
+
+            &.has-error {
+              border-color: #e11d48;
+              box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.15);
+            }
+          }
         }
       }
 
       .error-msg {
-        color: #dc2626;
+        color: #e11d48;
         font-size: 0.82rem;
         margin-top: 0.35rem;
-        display: flex;
-        align-items: center;
-        gap: 4px;
+        font-weight: 600;
       }
     }
 
@@ -228,8 +343,9 @@
       margin-bottom: 1.5rem;
 
       .control-label {
-        font-weight: 600;
-        color: #072314;
+        font-weight: 700;
+        color: $text-dark;
+        font-size: 0.95rem;
       }
 
       .stepper-box {
@@ -237,7 +353,7 @@
         align-items: center;
         background: #f0fdf4;
         border: 1.5px solid #10b981;
-        border-radius: 8px;
+        border-radius: 10px;
         overflow: hidden;
 
         .step-btn {
@@ -251,9 +367,11 @@
           font-weight: 700;
           font-size: 1.1rem;
           transition: background 0.2s ease;
+          border: none;
+          cursor: pointer;
 
           &:hover {
-            background: #e2f9ec;
+            background: #d1fae5;
           }
 
           &:disabled {
@@ -278,8 +396,9 @@
 
       .shipping-title {
         font-weight: 700;
-        color: #072314;
+        color: $text-dark;
         margin-bottom: 0.75rem;
+        font-size: 0.95rem;
       }
 
       .shipping-radio-options {
@@ -291,21 +410,22 @@
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 0.85rem 1rem;
-          border: 1.5px solid rgba(11, 70, 41, 0.2);
-          border-radius: 10px;
+          padding: 0.85rem 1.1rem;
+          border: 1.5px solid rgba(8, 44, 27, 0.15);
+          border-radius: 12px;
           background: #fafdfa;
           cursor: pointer;
-          transition: all 0.2s ease;
+          transition: all 0.25s ease;
 
           &:hover {
             border-color: #10b981;
+            background: #ffffff;
           }
 
           &.active {
-            border-color: #064e3b;
+            border-color: #059669;
             background: #f0fdf4;
-            box-shadow: 0 4px 12px rgba(6, 78, 59, 0.08);
+            box-shadow: 0 4px 14px rgba(5, 150, 105, 0.1);
           }
 
           .radio-left {
@@ -313,16 +433,21 @@
             align-items: center;
             gap: 0.65rem;
             font-weight: 600;
-            color: #072314;
+            color: $text-dark;
 
             input {
-              accent-color: #064e3b;
+              accent-color: #059669;
+              width: 16px;
+              height: 16px;
             }
           }
 
           .shipping-fee {
             font-weight: 700;
-            color: #065f46;
+            color: #047857;
+            background: #ecfdf5;
+            padding: 2px 8px;
+            border-radius: 6px;
           }
         }
       }
@@ -332,20 +457,21 @@
   // Invoice Summary Column
   .order-summary-col {
     .summary-card {
-      background: #f9fcf9;
-      border: 1.5px solid rgba(11, 70, 41, 0.18);
-      border-radius: 18px;
-      padding: 1.5rem;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04);
+      background: linear-gradient(180deg, #ffffff 0%, #f9fcf9 100%);
+      border: 1.5px solid rgba(8, 44, 27, 0.14);
+      border-radius: 20px;
+      padding: 1.75rem;
+      box-shadow: $shadow-md;
+      position: sticky;
+      top: 24px;
 
       .summary-title {
-        font-family: $font-bengali;
         font-size: 1.25rem;
         font-weight: 800;
-        color: #064e3b;
+        color: $text-dark;
         padding-bottom: 0.85rem;
-        margin-bottom: 1rem;
-        border-bottom: 1.5px solid rgba(11, 70, 41, 0.15);
+        margin-bottom: 1.15rem;
+        border-bottom: 1.5px solid rgba(8, 44, 27, 0.1);
       }
 
       .summary-row {
@@ -354,24 +480,29 @@
         align-items: center;
         margin-bottom: 0.85rem;
         font-size: 0.95rem;
-        color: #24412e;
+        color: $text-sub;
 
         strong {
-          color: #072314;
+          color: $text-dark;
+          font-weight: 700;
+        }
+
+        &.savings-row {
+          color: #059669;
           font-weight: 700;
         }
 
         &.total-row {
           padding-top: 1rem;
           margin-top: 1rem;
-          border-top: 2px dashed rgba(11, 70, 41, 0.2);
+          border-top: 2px dashed rgba(8, 44, 27, 0.15);
           font-size: 1.15rem;
           font-weight: 800;
-          color: #064e3b;
+          color: $text-dark;
 
           .total-amount {
-            font-size: 1.6rem;
-            color: #dc2626;
+            font-size: 1.75rem;
+            color: #e11d48;
             font-family: $font-display;
           }
         }
@@ -384,7 +515,7 @@
         background: #f0fdf4;
         border: 1px solid #86efac;
         padding: 0.75rem;
-        border-radius: 10px;
+        border-radius: 12px;
         margin: 1.25rem 0;
         color: #166534;
         font-size: 0.88rem;
@@ -403,15 +534,15 @@
         font-size: 1.25rem;
         font-weight: 800;
         padding: 1rem;
-        border-radius: 12px;
-        box-shadow: 0 8px 24px rgba(220, 38, 38, 0.4);
+        border-radius: 14px;
+        box-shadow: $shadow-cta-red;
         cursor: pointer;
-        transition: all 0.25s ease;
-        border: 1px solid rgba(255, 255, 255, 0.25);
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        border: 1px solid rgba(255, 255, 255, 0.3);
 
         &:hover {
           transform: translateY(-2px);
-          box-shadow: 0 12px 30px rgba(220, 38, 38, 0.55);
+          box-shadow: 0 14px 34px rgba(225, 29, 72, 0.5);
         }
 
         &:disabled {
@@ -427,8 +558,9 @@
         justify-content: center;
         gap: 0.45rem;
         margin-top: 1rem;
-        font-size: 0.82rem;
-        color: #55755e;
+        font-size: 0.85rem;
+        color: $text-muted;
+        font-weight: 500;
       }
     }
   }
@@ -441,7 +573,7 @@
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(10px);
     display: flex;
     align-items: center;
     justify-content: center;

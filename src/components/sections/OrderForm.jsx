@@ -15,13 +15,16 @@ import {
   User,
   MapPin,
   FileText,
+  Clock,
+  Flame,
+  Check,
 } from 'lucide-react';
 
 const PACKAGES = [
   {
     id: 'single',
     name: '১টি জার (সিঙ্গেল প্যাক)',
-    weight: '৫০০ গ্রাম প্রিমিয়াম ডেট জ্যাম',
+    weight: '৫০০ গ্রাম প্রিমিয়াম ডেট জ্যাম',
     price: 490,
     regularPrice: 650,
     saveAmount: 160,
@@ -74,7 +77,8 @@ export default function OrderForm({ selectedPackageId, onSelectPackage }) {
   const standardShippingCost = shippingArea === 'dhaka_inside' ? 70 : 130;
   const shippingCost = currentPackage.freeShipping ? 0 : standardShippingCost;
   const grandTotal = subtotal + shippingCost;
-  const totalSavings = currentPackage.saveAmount * quantity + (currentPackage.freeShipping ? standardShippingCost : 0);
+  const totalSavings =
+    currentPackage.saveAmount * quantity + (currentPackage.freeShipping ? standardShippingCost : 0);
 
   const handlePackageChange = (pkgId) => {
     setActivePackageId(pkgId);
@@ -131,7 +135,7 @@ export default function OrderForm({ selectedPackageId, onSelectPackage }) {
           particleCount: 100,
           spread: 70,
           origin: { y: 0.6 },
-          colors: ['#0b4629', '#10b981', '#f59e0b', '#dc2626'],
+          colors: ['#082c1b', '#10b981', '#f59e0b', '#e11d48'],
         });
       } catch (err) {
         // Safe fallback
@@ -157,10 +161,26 @@ export default function OrderForm({ selectedPackageId, onSelectPackage }) {
         <div className="checkout-container-box reveal-on-scroll">
           {/* Header */}
           <div className="form-main-header">
-            <h2 className="form-headline">অর্ডার করতে নিচের ফর্মটি সম্পূর্ণ পূরণ করুন</h2>
+            <div className="modern-eyebrow-badge badge-amber">
+              <span className="pulse-dot" />
+              <span>সহজ ও দ্রুত অর্ডার প্রসেস</span>
+            </div>
+            <h2 className="form-headline">অর্ডার করতে নিচের সহজ ফর্মটি পূরণ করুন</h2>
             <p className="form-subtext">
-              ১০০% ক্যাশ অন ডেলিভারি — পণ্য হাতে পেয়ে চেক করে সম্পূর্ণ নিশ্চিন্তে টাকা পরিশোধ করুন
+              ১০০% ক্যাশ অন ডেলিভারি — ডেলিভারিম্যান থেকে প্যাকেট খুলে দেখে নিশ্চিন্তে মূল্য পরিশোধ করুন
             </p>
+          </div>
+
+          {/* Urgency Ribbon */}
+          <div className="checkout-urgency-banner">
+            <div className="urgency-left">
+              <Flame size={18} className="flame-icon" />
+              <span>আজকের মেগা ছাড় ও ক্যাশ অন ডেলিভারি অফার সচল রয়েছে!</span>
+            </div>
+            <div className="urgency-timer">
+              <Clock size={14} />
+              <span>সীমিত স্টক বাকি</span>
+            </div>
           </div>
 
           {/* Package Selection Cards */}
@@ -181,7 +201,13 @@ export default function OrderForm({ selectedPackageId, onSelectPackage }) {
                   >
                     {pkg.badge && <div className="popular-badge">{pkg.badge}</div>}
 
-                    <div className="package-name">{pkg.name}</div>
+                    <div className="package-card-header">
+                      <div className={`radio-selector-circle ${isSelected ? 'checked' : ''}`}>
+                        {isSelected && <Check size={14} />}
+                      </div>
+                      <div className="package-name">{pkg.name}</div>
+                    </div>
+
                     <div className="package-weight">{pkg.weight}</div>
 
                     <div className="price-box">
@@ -227,51 +253,60 @@ export default function OrderForm({ selectedPackageId, onSelectPackage }) {
                   </div>
                 </div>
 
-                {/* Name */}
+                {/* Name Field */}
                 <div className="field-group">
                   <label htmlFor="customer-name">
                     আপনার নাম লিখুন <span className="required-star">*</span>
                   </label>
-                  <input
-                    id="customer-name"
-                    type="text"
-                    placeholder="আপনার পুরো নাম লিখুন"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className={errors.name ? 'has-error' : ''}
-                  />
+                  <div className="input-with-icon">
+                    <User size={18} className="field-icon" />
+                    <input
+                      id="customer-name"
+                      type="text"
+                      placeholder="আপনার পুরো নাম লিখুন"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className={errors.name ? 'has-error' : ''}
+                    />
+                  </div>
                   {errors.name && <div className="error-msg">{errors.name}</div>}
                 </div>
 
-                {/* Phone */}
+                {/* Phone Field */}
                 <div className="field-group">
                   <label htmlFor="customer-phone">
                     মোবাইল নাম্বার দিন <span className="required-star">*</span>
                   </label>
-                  <input
-                    id="customer-phone"
-                    type="tel"
-                    placeholder="০১৭১১-XXXXXX"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className={errors.phone ? 'has-error' : ''}
-                  />
+                  <div className="input-with-icon">
+                    <PhoneCall size={18} className="field-icon" />
+                    <input
+                      id="customer-phone"
+                      type="tel"
+                      placeholder="০১৭১১-XXXXXX"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      className={errors.phone ? 'has-error' : ''}
+                    />
+                  </div>
                   {errors.phone && <div className="error-msg">{errors.phone}</div>}
                 </div>
 
-                {/* Address */}
+                {/* Address Field */}
                 <div className="field-group">
                   <label htmlFor="customer-address">
                     সম্পূর্ণ ডেলিভারি ঠিকানা <span className="required-star">*</span>
                   </label>
-                  <textarea
-                    id="customer-address"
-                    rows={3}
-                    placeholder="বাসা নং, রোড নং, এলাকা, থানা ও জেলা উল্লেখ করুন"
-                    value={formData.address}
-                    onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                    className={errors.address ? 'has-error' : ''}
-                  />
+                  <div className="input-with-icon textarea-icon-wrap">
+                    <MapPin size={18} className="field-icon textarea-icon" />
+                    <textarea
+                      id="customer-address"
+                      rows={3}
+                      placeholder="বাসা নং, রোড নং, এলাকা, থানা ও জেলা উল্লেখ করুন"
+                      value={formData.address}
+                      onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                      className={errors.address ? 'has-error' : ''}
+                    />
+                  </div>
                   {errors.address && <div className="error-msg">{errors.address}</div>}
                 </div>
 
@@ -326,13 +361,16 @@ export default function OrderForm({ selectedPackageId, onSelectPackage }) {
                   <label htmlFor="customer-note">
                     বিশেষ কোনো নির্দেশনা থাকলে লিখুন (অপশনাল):
                   </label>
-                  <input
-                    id="customer-note"
-                    type="text"
-                    placeholder="যেমন: বিকেলে ডেলিভারি দিলে ভালো হয়"
-                    value={formData.note}
-                    onChange={(e) => setFormData({ ...formData, note: e.target.value })}
-                  />
+                  <div className="input-with-icon">
+                    <FileText size={18} className="field-icon" />
+                    <input
+                      id="customer-note"
+                      type="text"
+                      placeholder="যেমন: বিকেলে ডেলিভারি দিলে ভালো হয়"
+                      value={formData.note}
+                      onChange={(e) => setFormData({ ...formData, note: e.target.value })}
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -360,7 +398,7 @@ export default function OrderForm({ selectedPackageId, onSelectPackage }) {
                   </div>
 
                   {totalSavings > 0 && (
-                    <div className="summary-row" style={{ color: '#059669' }}>
+                    <div className="summary-row savings-row">
                       <span>মোট সাশ্রয়</span>
                       <strong>- ৳{totalSavings}</strong>
                     </div>
@@ -434,7 +472,7 @@ export default function OrderForm({ selectedPackageId, onSelectPackage }) {
               </div>
               <div className="receipt-row">
                 <span>সর্বমোট বিল:</span>
-                <strong style={{ color: '#dc2626' }}>
+                <strong style={{ color: '#e11d48' }}>
                   ৳{orderSuccess.total} (ক্যাশ অন ডেলিভারি)
                 </strong>
               </div>
@@ -461,3 +499,4 @@ export default function OrderForm({ selectedPackageId, onSelectPackage }) {
     </section>
   );
 }
+

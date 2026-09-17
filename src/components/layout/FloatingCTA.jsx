@@ -35,18 +35,27 @@ export default function FloatingCTA({ onOrderClick, selectedPackage }) {
     <div className={`floating-sticky-cta ${isVisible ? 'visible' : ''}`}>
       <div className="floating-inner">
         <div className="floating-left-info">
-          <img
-            src="/images/date-jam-hero.jpg"
-            alt="ডেট জ্যাম"
-            className="floating-thumb"
-          />
+          <div className="floating-thumb-wrapper">
+            <img
+              src="/images/date-jam-hero.jpg"
+              alt="স্বাদ ঘর ডেট জ্যাম"
+              className="floating-thumb"
+            />
+            <span className="live-pulse-dot" />
+          </div>
           <div className="floating-text-wrap">
+            <div className="floating-badge-row">
+              <span className="floating-mini-badge">
+                {selectedPackage?.id === 'triple' ? '★ স্পেশাল অফার + ফ্রি ডেলিভারি' : selectedPackage?.id === 'double' ? '★ বেস্ট সেলার + ডেলিভারি ডিসকাউন্ট' : '★ ১০০% খাঁটি ডেট জ্যাম'}
+              </span>
+            </div>
             <div className="floating-title">
               {selectedPackage?.name || 'খাঁটি প্রিমিয়াম ডেট জ্যাম'}
             </div>
-            <div className="floating-price">
-              ৳{selectedPackage?.price || 490}
-            </div>
+          </div>
+          <div className="floating-price-box">
+            <span className="price-curr">৳</span>
+            <span className="price-val">{selectedPackage?.price || 490}</span>
           </div>
         </div>
 
@@ -54,9 +63,10 @@ export default function FloatingCTA({ onOrderClick, selectedPackage }) {
           type="button"
           className="floating-action-btn"
           onClick={onOrderClick}
+          aria-label="অর্ডার করতে চাই"
         >
           <ShoppingBag size={18} />
-          <span>অর্ডার করতে চাই</span>
+          <span>অর্ডার করুন</span>
         </button>
       </div>
     </div>
