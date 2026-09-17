@@ -13,7 +13,7 @@
     padding: 1.75rem;
     border: 1px solid rgba(245, 158, 11, 0.25);
     box-shadow: $shadow-md;
-    max-width: 960px;
+    max-width: 1160px;
     margin: 0 auto 2.5rem auto;
     display: grid;
     grid-template-columns: 1fr;
@@ -139,7 +139,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    max-width: 1140px;
+    max-width: 1220px;
     margin: 0 auto 1.25rem auto;
     padding: 0 0.5rem;
 
@@ -203,7 +203,7 @@
   // Draggable Slider Wrapper
   .reviews-slider-wrapper {
     position: relative;
-    max-width: 1140px;
+    max-width: 1220px;
     margin: 0 auto;
 
     &::after {
@@ -251,7 +251,7 @@
 
     // Pure Image Review Card
     .review-photo-card {
-      flex: 0 0 300px;
+      flex: 0 0 310px;
       scroll-snap-align: start;
       border-radius: 20px;
       overflow: hidden;
@@ -263,7 +263,7 @@
       position: relative;
 
       @media (min-width: 768px) {
-        flex: 0 0 340px;
+        flex: 0 0 360px;
       }
 
       @media (max-width: 480px) {
@@ -289,7 +289,7 @@
       .photo-media-wrapper {
         position: relative;
         width: 100%;
-        height: 380px;
+        height: 400px;
         overflow: hidden;
         background: #021a0f;
 
