@@ -2,120 +2,200 @@
 @use "../abstracts/mixins" as *;
 
 .health-warning-section {
-  background-color: #f7faf7;
+  background-color: $bg-warm-ivory;
   position: relative;
 
-  .warning-content-card {
+  // Warning Stat Banner
+  .warning-stat-banner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
     background: #ffffff;
-    border-radius: 20px;
-    padding: 1.5rem;
-    border: 1px solid rgba(220, 38, 38, 0.2);
-    box-shadow: 0 10px 35px rgba(220, 38, 38, 0.06);
+    border: 1px solid rgba(225, 29, 72, 0.25);
+    border-left: 5px solid #e11d48;
+    padding: 1rem 1.4rem;
+    border-radius: $radius-md;
+    box-shadow: 0 8px 24px rgba(225, 29, 72, 0.08);
+    max-width: 960px;
+    margin: 0 auto 2.5rem auto;
 
-    @media (min-width: 768px) {
-      padding: 2.5rem;
+    .stat-icon {
+      color: #e11d48;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(225, 29, 72, 0.1);
+    }
+
+    .stat-text {
+      font-size: clamp(0.95rem, 2.3vw, 1.06rem);
+      color: #881337;
+      line-height: 1.6;
+
+      strong {
+        color: #be123c;
+        font-weight: 700;
+      }
+    }
+
+    @media (max-width: 640px) {
+      flex-direction: column;
+      text-align: center;
+      gap: 0.65rem;
     }
   }
 
-  .split-layout {
+  // Bento Grid Layout
+  .warning-bento-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 2rem;
-    align-items: center;
+    gap: 1.5rem;
+    max-width: 1040px;
+    margin: 0 auto;
 
-    @media (min-width: 860px) {
+    @media (min-width: 900px) {
       grid-template-columns: 1.05fr 1.35fr;
-      gap: 2.8rem;
+      gap: 1.8rem;
     }
   }
 
-  .visual-side {
-    position: relative;
-
-    .warning-image-frame {
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
-      border: 2px solid rgba(239, 68, 68, 0.3);
+  // Visual Bento Card
+  .bento-visual-card {
+    .visual-frame {
       position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      height: 100%;
+      min-height: 380px;
+      border: 1px solid rgba(225, 29, 72, 0.2);
+      box-shadow: $shadow-md;
+      background: #1c0a0c;
 
-      img {
+      .warning-img {
         width: 100%;
-        height: auto;
+        height: 100%;
+        object-fit: cover;
         display: block;
-        transition: transform 0.4s ease;
+        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
       }
 
-      &:hover img {
-        transform: scale(1.03);
+      &:hover .warning-img {
+        transform: scale(1.04);
       }
 
-      .alert-overlay-tag {
+      .visual-overlay-content {
         position: absolute;
-        top: 12px;
-        left: 12px;
-        background: rgba(185, 28, 28, 0.92);
-        backdrop-filter: blur(6px);
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 2rem 1.5rem 1.5rem 1.5rem;
+        background: linear-gradient(180deg, transparent 0%, rgba(15, 2, 4, 0.85) 45%, rgba(15, 2, 4, 0.96) 100%);
         color: #ffffff;
-        font-size: 0.82rem;
-        font-weight: 700;
-        padding: 4px 12px;
-        border-radius: 6px;
+
+        .danger-chip {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          background: #e11d48;
+          color: #ffffff;
+          font-size: 0.78rem;
+          font-weight: 700;
+          padding: 3px 10px;
+          border-radius: $radius-full;
+          margin-bottom: 0.6rem;
+        }
+
+        h3 {
+          color: #ffffff;
+          font-size: 1.25rem;
+          font-weight: 700;
+          margin-bottom: 0.35rem;
+          line-height: 1.35;
+        }
+
+        p {
+          color: #fecdd3;
+          font-size: 0.92rem;
+          line-height: 1.5;
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  // Cards Column
+  .bento-cards-col {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.15rem;
+
+    @media (min-width: 600px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .hazard-bento-card {
+    background: #ffffff;
+    border: 1px solid rgba(225, 29, 72, 0.15);
+    border-radius: 16px;
+    padding: 1.35rem 1.25rem;
+    box-shadow: 0 6px 18px rgba(225, 29, 72, 0.04);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 28px rgba(225, 29, 72, 0.12);
+      border-color: rgba(225, 29, 72, 0.35);
+    }
+
+    .card-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.9rem;
+
+      .card-icon-wrap {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: rgba(225, 29, 72, 0.09);
+        color: #e11d48;
         display: flex;
         align-items: center;
-        gap: 6px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        justify-content: center;
+      }
+
+      .card-tag {
+        font-size: 0.74rem;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: $radius-full;
+        background: #fff1f2;
+        color: #be123c;
+        border: 1px solid #fecdd3;
       }
     }
-  }
 
-  .points-side {
-    .hazard-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1.15rem;
+    .card-title {
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: #881337;
+      margin-bottom: 0.45rem;
+      line-height: 1.35;
+    }
 
-      .hazard-item {
-        display: flex;
-        align-items: flex-start;
-        gap: 0.9rem;
-        padding: 0.85rem 1rem;
-        background: #fff8f8;
-        border-radius: 12px;
-        border-left: 4px solid #ef4444;
-        transition: transform 0.2s ease, background-color 0.2s ease;
-
-        &:hover {
-          transform: translateX(4px);
-          background: #fef2f2;
-        }
-
-        .icon-wrap {
-          flex-shrink: 0;
-          margin-top: 2px;
-          color: #dc2626;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 26px;
-          height: 26px;
-          border-radius: 50%;
-          background: rgba(239, 68, 68, 0.12);
-        }
-
-        .item-text {
-          font-family: $font-bengali;
-          font-size: clamp(0.98rem, 2.2vw, 1.08rem);
-          color: #2b1111;
-          line-height: 1.55;
-          font-weight: 500;
-
-          strong {
-            color: #991b1b;
-            font-weight: 700;
-          }
-        }
-      }
+    .card-desc {
+      font-size: 0.9rem;
+      color: #4c1d28;
+      line-height: 1.58;
+      margin: 0;
+      flex-grow: 1;
     }
   }
 }
