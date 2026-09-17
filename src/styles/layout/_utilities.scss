@@ -6,46 +6,47 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.65rem;
+  gap: 0.75rem;
   background: $gradient-cta-red;
   color: #ffffff;
   font-family: $font-bengali;
   font-weight: 700;
-  font-size: clamp(1.15rem, 3.5vw, 1.35rem);
-  padding: 0.9rem 2.8rem;
-  min-height: 52px;
-  border-radius: 9999px;
+  font-size: clamp(1.1rem, 3.2vw, 1.3rem);
+  padding: 0.95rem 2.75rem;
+  min-height: 54px;
+  border-radius: $radius-full;
   box-shadow: $shadow-cta-red;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   text-decoration: none;
   cursor: pointer;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   position: relative;
   overflow: hidden;
   letter-spacing: 0.02em;
 
   @media (max-width: 480px) {
     width: 100%;
-    padding: 0.85rem 1.5rem;
+    padding: 0.9rem 1.4rem;
+    font-size: 1.12rem;
   }
 
   &::before {
     content: '';
     position: absolute;
     top: 0;
-    left: -100%;
+    left: -120%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
-    transition: left 0.65s ease;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.38), transparent);
+    transition: left 0.75s ease;
   }
 
   &:hover {
     transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 12px 32px rgba(220, 38, 38, 0.55);
+    box-shadow: 0 14px 36px -4px rgba(225, 29, 72, 0.55);
 
     &::before {
-      left: 100%;
+      left: 120%;
     }
   }
 
@@ -54,41 +55,142 @@
   }
 }
 
-// Green Pill Section Headers
-.green-pill-badge {
-  display: inline-flex;
+// CTA Guarantee Subtext
+.cta-guarantee-note {
+  display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #094726 0%, #032d16 100%);
-  color: #ffffff;
+  gap: 6px;
+  margin-top: 0.75rem;
+  font-size: 0.88rem;
+  color: #065f46;
+  font-weight: 600;
+
+  svg {
+    color: #10b981;
+  }
+}
+
+// Modern Eyebrow Capsule Badges
+.modern-eyebrow-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.42rem 1.25rem;
+  border-radius: $radius-full;
   font-family: $font-bengali;
-  font-size: clamp(1.15rem, 3.6vw, 1.5rem);
+  font-size: clamp(0.88rem, 2.2vw, 0.98rem);
   font-weight: 700;
-  padding: 0.7rem 1.8rem;
-  border-radius: 8px;
-  box-shadow: 0 6px 20px rgba(3, 45, 22, 0.32);
-  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  letter-spacing: 0.01em;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #065f46;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  .pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    animation: pulseDot 2s infinite;
+  }
+
+  &.badge-warning {
+    background: rgba(225, 29, 72, 0.08);
+    border-color: rgba(225, 29, 72, 0.28);
+    color: #be123c;
+    box-shadow: 0 4px 14px rgba(225, 29, 72, 0.1);
+
+    .pulse-dot {
+      background: #e11d48;
+      box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.7);
+    }
+  }
+
+  &.badge-amber {
+    background: rgba(245, 158, 11, 0.12);
+    border-color: rgba(245, 158, 11, 0.35);
+    color: #92400e;
+    box-shadow: 0 4px 14px rgba(245, 158, 11, 0.12);
+
+    .pulse-dot {
+      background: #f59e0b;
+      box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
+    }
+  }
+}
+
+// Backward compatible pill badge (now styled modernly)
+.green-pill-badge {
+  @extend .modern-eyebrow-badge;
+}
+
+@keyframes pulseDot {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+// Modern Section Header Component
+.section-header-center {
   text-align: center;
-  max-width: 100%;
+  max-width: 780px;
+  margin: 0 auto 2.75rem auto;
+
+  .section-headline {
+    font-size: clamp(1.65rem, 4.2vw, 2.5rem);
+    font-weight: 800;
+    color: $text-dark;
+    line-height: 1.32;
+    margin-top: 0.95rem;
+    margin-bottom: 0.65rem;
+    letter-spacing: -0.015em;
+
+    .highlight-emerald {
+      color: #059669;
+      background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .highlight-red {
+      color: #e11d48;
+      background: linear-gradient(135deg, #e11d48 0%, #f43f5e 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .highlight-gold {
+      color: #d97706;
+      background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+  .section-subtext {
+    font-size: clamp(0.98rem, 2.4vw, 1.15rem);
+    color: $text-muted;
+    line-height: 1.65;
+    margin: 0 auto;
+    max-width: 650px;
+  }
 }
 
-.section-title-center {
-  text-align: center;
-  margin-bottom: 2.2rem;
-}
-
-// Glassmorphism Card
-.glass-panel {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(11, 70, 41, 0.12);
-  border-radius: $radius-lg;
-  box-shadow: $shadow-md;
-}
-
+// Center CTA Box
 .center-cta-box {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  margin-top: 2.2rem;
+  margin-top: 2.75rem;
 }
