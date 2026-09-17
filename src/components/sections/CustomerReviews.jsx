@@ -1,10 +1,26 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Star, CheckCircle2, MapPin, ThumbsUp, Quote, MessageSquareHeart } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import {
+  Star,
+  CheckCircle2,
+  MapPin,
+  ThumbsUp,
+  Quote,
+  MessageSquareHeart,
+  ChevronLeft,
+  ChevronRight,
+  MoveHorizontal
+} from 'lucide-react';
 
 export default function CustomerReviews() {
-  const [filter, setFilter] = useState('all');
+  const trackRef = useRef(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeftState, setScrollLeftState] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
 
   const reviews = [
     {
@@ -79,7 +95,108 @@ export default function CustomerReviews() {
       text: 'ক্যাশ অন ডেলিভারিতে চেক করে নিয়েছিলাম। যেমন দেখেছি তেমনটাই পেয়েছি। ৩ জারের মেগা সেভার প্যাকে ফ্রি ডেলিভারি পেয়েছি। অসাধারণ সার্ভিস!',
       likes: 16,
     },
+    {
+      id: 7,
+      name: 'মাহমুদুল হক',
+      location: 'চকবাজার, কুমিল্লা',
+      avatarLetter: 'মা',
+      avatarGrad: 'from-blue',
+      rating: 5,
+      date: '২ সপ্তাহ আগে',
+      pack: '২টি জার (ফ্যামিলি প্যাক)',
+      text: 'খেজুর ও খাঁটি মধুর এত সুন্দর মিশ্রণ বাজারে আগে কখনো দেখিনি। সকালের নাস্তায় ডিম-পরোটা বা টোস্টের সাথে অসাধারণ জমে। পরিবারের সবাই তৃপ্তি নিয়ে খাচ্ছে।',
+      likes: 19,
+    },
+    {
+      id: 8,
+      name: 'রোকেয়া বেগম',
+      location: 'জালেশ্বরীতলা, বগুড়া',
+      avatarLetter: 'রো',
+      avatarGrad: 'from-rose',
+      rating: 5,
+      date: '৩ সপ্তাহ আগে',
+      pack: '১টি জার (সিঙ্গেল প্যাক)',
+      text: 'প্রথমবার পরীক্ষামূলক ১টি জার নিয়েছিলাম। এখন পুরো পরিবার এটার ফ্যান হয়ে গেছে। এবার ৩ জারের ফ্যামিলি প্যাক অর্ডার করলাম। কোয়ালিটিতে কোনো ছাড় নেই!',
+      likes: 23,
+    },
   ];
+
+  // Update active index and scroll boundaries
+  const updateScrollState = () => {
+    if (!trackRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = trackRef.current;
+    setCanScrollLeft(scrollLeft > 10);
+    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+
+    const card = trackRef.current.querySelector('.modern-review-card');
+    if (card) {
+      const cardWidth = card.offsetWidth + 24; // width + gap
+      const newIndex = Math.round(scrollLeft / cardWidth);
+      setActiveIndex(Math.min(newIndex, reviews.length - 1));
+    }
+  };
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    track.addEventListener('scroll', updateScrollState, { passive: true });
+    window.addEventListener('resize', updateScrollState);
+    updateScrollState();
+
+    return () => {
+      track.removeEventListener('scroll', updateScrollState);
+      window.removeEventListener('resize', updateScrollState);
+    };
+  }, []);
+
+  // Mouse Drag Events
+  const handleMouseDown = (e) => {
+    if (!trackRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX - trackRef.current.offsetLeft);
+    setScrollLeftState(trackRef.current.scrollLeft);
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDragging || !trackRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - trackRef.current.offsetLeft;
+    const walk = (x - startX) * 1.6; // Scroll speed multiplier
+    trackRef.current.scrollLeft = scrollLeftState - walk;
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseLeave = () => {
+    if (isDragging) setIsDragging(false);
+  };
+
+  // Button Click Navigation
+  const scroll = (direction) => {
+    if (!trackRef.current) return;
+    const card = trackRef.current.querySelector('.modern-review-card');
+    const cardWidth = card ? card.offsetWidth + 24 : 360;
+    const scrollOffset = direction === 'next' ? cardWidth : -cardWidth;
+
+    trackRef.current.scrollBy({
+      left: scrollOffset,
+      behavior: 'smooth',
+    });
+  };
+
+  const scrollToSlide = (index) => {
+    if (!trackRef.current) return;
+    const card = trackRef.current.querySelector('.modern-review-card');
+    const cardWidth = card ? card.offsetWidth + 24 : 360;
+
+    trackRef.current.scrollTo({
+      left: index * cardWidth,
+      behavior: 'smooth',
+    });
+  };
 
   return (
     <section className="section-wrapper customer-reviews-section" id="customer-reviews">
@@ -147,54 +264,101 @@ export default function CustomerReviews() {
           </div>
         </div>
 
-        {/* Reviews Grid */}
-        <div className="reviews-grid">
-          {reviews.map((rev, index) => (
-            <div
-              key={rev.id}
-              className={`modern-review-card reveal-on-scroll delay-${(index % 3) * 75 + 100}`}
+        {/* Draggable Slider Header Controls */}
+        <div className="slider-controls-bar reveal-on-scroll">
+          <div className="drag-hint-pill">
+            <MoveHorizontal size={15} />
+            <span>ড্র্যাগ বা সোয়াইপ করে স্লাইড করুন</span>
+          </div>
+
+          <div className="slider-nav-arrows">
+            <button
+              type="button"
+              className={`nav-arrow-btn prev ${!canScrollLeft ? 'disabled' : ''}`}
+              onClick={() => scroll('prev')}
+              disabled={!canScrollLeft}
+              aria-label="Previous review"
             >
-              <div className="review-card-top">
-                <div className={`avatar-box ${rev.avatarGrad}`}>{rev.avatarLetter}</div>
-                <div className="author-details">
-                  <div className="author-name">{rev.name}</div>
-                  <div className="author-location">
-                    <MapPin size={12} />
-                    <span>{rev.location}</span>
+              <ChevronLeft size={20} />
+            </button>
+            <button
+              type="button"
+              className={`nav-arrow-btn next ${!canScrollRight ? 'disabled' : ''}`}
+              onClick={() => scroll('next')}
+              disabled={!canScrollRight}
+              aria-label="Next review"
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
+        </div>
+
+        {/* Draggable Reviews Slider Track */}
+        <div className="reviews-slider-wrapper">
+          <div
+            ref={trackRef}
+            className={`reviews-slider-track ${isDragging ? 'is-dragging' : ''}`}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseLeave}
+          >
+            {reviews.map((rev) => (
+              <div key={rev.id} className="modern-review-card slider-card">
+                <div className="review-card-top">
+                  <div className={`avatar-box ${rev.avatarGrad}`}>{rev.avatarLetter}</div>
+                  <div className="author-details">
+                    <div className="author-name">{rev.name}</div>
+                    <div className="author-location">
+                      <MapPin size={12} />
+                      <span>{rev.location}</span>
+                    </div>
+                  </div>
+                  <Quote size={24} className="quote-watermark" />
+                </div>
+
+                <div className="rating-and-pack">
+                  <div className="star-row">
+                    {[...Array(rev.rating)].map((_, i) => (
+                      <Star key={i} size={14} fill="#f59e0b" stroke="#f59e0b" />
+                    ))}
+                  </div>
+                  <span className="pack-bought-badge">{rev.pack}</span>
+                </div>
+
+                <p className="review-quote-text">“{rev.text}”</p>
+
+                <div className="review-card-footer">
+                  <div className="verified-buyer-tag">
+                    <CheckCircle2 size={13} />
+                    <span>ভেরিফাইড ক্রেতা</span>
+                  </div>
+                  <div className="footer-right">
+                    <span className="review-date">{rev.date}</span>
+                    <div className="helpful-tag">
+                      <ThumbsUp size={12} />
+                      <span>{rev.likes}</span>
+                    </div>
                   </div>
                 </div>
-                <Quote size={24} className="quote-watermark" />
               </div>
+            ))}
+          </div>
+        </div>
 
-              <div className="rating-and-pack">
-                <div className="star-row">
-                  {[...Array(rev.rating)].map((_, i) => (
-                    <Star key={i} size={14} fill="#f59e0b" stroke="#f59e0b" />
-                  ))}
-                </div>
-                <span className="pack-bought-badge">{rev.pack}</span>
-              </div>
-
-              <p className="review-quote-text">“{rev.text}”</p>
-
-              <div className="review-card-footer">
-                <div className="verified-buyer-tag">
-                  <CheckCircle2 size={13} />
-                  <span>ভেরিফাইড ক্রেতা</span>
-                </div>
-                <div className="footer-right">
-                  <span className="review-date">{rev.date}</span>
-                  <div className="helpful-tag">
-                    <ThumbsUp size={12} />
-                    <span>{rev.likes}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+        {/* Pagination Dots Indicator */}
+        <div className="slider-dots-row reveal-on-scroll">
+          {reviews.map((rev, idx) => (
+            <button
+              key={rev.id}
+              type="button"
+              className={`dot-pill ${activeIndex === idx ? 'active' : ''}`}
+              onClick={() => scrollToSlide(idx)}
+              aria-label={`Go to slide ${idx + 1}`}
+            />
           ))}
         </div>
       </div>
     </section>
   );
 }
-
